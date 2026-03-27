@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linka NFC | La carte de visite réinventée</title>
+    <style>
+        /* --- Variables & Reset --- */
+        :root {
+            --bg-color: #ffffff;
+            --text-main: #111111;
+            --text-muted: #666666;
+            --accent: #000000;
+            --surface: #f5f5f7;
+            --border: #e1e1e1;
+            --radius: 16px;
+            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-stack);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- Typography --- */
+        h1, h2, h3 {
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        h1 { font-size: clamp(3rem, 5vw, 5rem); margin-bottom: 1.5rem; }
+        h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 3rem; text-align: center; }
+        h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        p { font-size: 1.125rem; color: var(--text-muted); }
+
+        /* --- Components --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: #ffffff;
+            padding: 1rem 2rem;
+            border-radius: 999px;
+            font-weight: 500;
+            font-size: 1.125rem;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            opacity: 0.85;
+            transform: scale(1.02);
+        }
+
+        section {
+            padding: 8rem 0;
+        }
+
+        /* --- Navigation --- */
+        nav {
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 5rem; /* account for nav */
+        }
+
+        .hero p {
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            font-size: 1.25rem;
+        }
+
+        /* --- How It Works & Benefits --- */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: var(--surface);
+            padding: 3rem 2rem;
+            border-radius: var(--radius);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        /* --- Product Showcase --- */
+        .showcase {
+            background-color: var(--text-main);
+            color: #ffffff;
+            text-align: center;
+            border-radius: var(--radius);
+            padding: 5rem 2rem;
+            margin: 4rem 2rem;
+        }
+
+        .showcase h2 { color: #ffffff; }
+        .showcase p { color: #a1a1a6; margin-bottom: 3rem; }
+        
+        .nfc-card-visual {
+            width: 300px;
+            height: 190px;
+            background: linear-gradient(135deg, #222, #000);
+            border: 1px solid #333;
+            border-radius: 12px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            font-weight: bold;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nfc-card-visual::after {
+            content: '';
+            position: absolute;
+            top: -50%; right: -50%; bottom: -50%; left: -50%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.1), transparent);
+            transform: rotate(30deg);
+        }
+
+        /* --- Pricing --- */
+        .pricing-card {
+            max-width: 500px;
+            margin: 0 auto;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .price {
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            margin: 1.5rem 0;
+        }
+
+        .price span {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            letter-spacing: normal;
+        }
+
+        /* --- CTA Section --- */
+        .cta-section {
+            text-align: center;
+            padding: 8rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            section { padding: 4rem 0; }
+            .showcase { margin: 2rem 1rem; padding: 3rem 1rem; }
+            .nfc-card-visual { width: 100%; max-width: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Linka.</div>
+        <a href="#commander" class="btn" style="padding: 0.5rem 1.25rem; font-size: 0.9rem;">Commander</a>
+    </nav>
+
+    <main>
+        <header class="hero container">
+            <h1>Le réseau, simplifié.</h1>
+            <p>Partagez vos coordonnées, réseaux sociaux et liens importants en un seul geste grâce à la technologie NFC. Une seule carte pour la vie.</p>
+            <a href="#commander" class="btn">Commander votre Linka</a>
+        </header>
+
+        <section class="container">
+            <h2>Comment ça marche</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <span class="card-icon">1️⃣</span>
+                    <h3>Personnalisez</h3>
+                    <p>Créez votre profil en ligne en quelques minutes avec vos liens et contacts.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">2️⃣</span>
+                    <h3>Approchez</h3>
+                    <p>Posez votre carte Linka sur le smartphone de votre interlocuteur.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">3️⃣</span>
+                    <h3>Connectez</h3>
+                    <p>Vos informations s'affichent instantanément sur leur écran, prêtes à être sauvegardées.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="showcase">
+            <div class="container">
+                <h2>L'élégance technologique.</h2>
+                <p>Une finition premium pour marquer les esprits à chaque rencontre.</p>
+                <div class="nfc-card-visual">
+                    LINKA NFC
+                </div>
+            </div>
+        </section>
+
+        <section class="container">
+            <h2>Un outil, de multiples usages</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <span class="card-icon">👔</span>
+                    <h3>Entreprises</h3>
+                    <p>Remplacez les cartes papier obsolètes. Mettez à jour les coordonnées de vos équipes en temps réel.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🍽️</span>
+                    <h3>Restaurants</h3>
+                    <p>Partagez instantanément votre menu digital, vos réseaux ou votre page d'avis Google.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🚕</span>
+                    <h3>Chauffeurs & Taxis</h3>
+                    <p>Facilitez le recueil d'avis positifs et le partage de vos informations de réservation.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="container" style="border-top: 1px solid var(--border);">
+            <h2>Pourquoi choisir Linka ?</h2>
+            <div class="grid-3">
+                <div class="card" style="background: transparent;">
+                    <h3>⚡ Zéro application</h3>
+                    <p>Aucune application n'est requise pour vous ou pour la personne qui scanne votre carte.</p>
+                </div>
+                <div class="card" style="background: transparent;">
+                    <h3>📱 100% Compatible</h3>
+                    <p>Fonctionne nativement sur la quasi-totalité des smartphones iPhone et Android récents.</p>
+                </div>
+                <div class="card" style="background: transparent;">
+                    <h3>🌱 Écologique</h3>
+                    <p>Fini l'impression de milliers de cartes en papier qui finissent à la poubelle.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="commander" class="container">
+            <h2>Un tarif clair et unique</h2>
+            <div class="pricing-card">
+                <h3>Carte Linka Premium</h3>
+                <div class="price">29€ <span>/ net</span></div>
+                <p style="margin-bottom: 2rem;">Paiement unique. Aucun abonnement caché. Mise à jour de votre profil illimitée.</p>
+                <a href="#" class="btn" style="width: 100%;">Commander maintenant</a>
+            </div>
+        </section>
+
+        <section class="cta-section container">
+            <h2>Prêt à moderniser vos rencontres ?</h2>
+            <p style="max-width: 500px; margin: 1rem auto 2rem;">Rejoignez les professionnels qui utilisent déjà Linka pour développer leur réseau efficacement.</p>
+            <a href="#commander" class="btn">Obtenir ma carte Linka</a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Linka NFC. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
