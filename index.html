@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linka NFC | Vos connexions, instantanées.</title>
     <style>
-        /* --- Variables & Reset --- */
         :root {
             --bg-color: #ffffff;
-            --text-main: #1a1a1a;
-            --text-muted: #6e6e73;
+            --text-main: #111111;
+            --text-muted: #666666;
             --accent: #000000;
             --surface: #f5f5f7;
             --border: #e1e1e1;
@@ -17,11 +16,7 @@
             --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: var(--font-stack);
@@ -31,29 +26,15 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
+        a { text-decoration: none; color: inherit; }
 
-        /* --- Typography --- */
-        h1, h2, h3 {
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-        }
-
+        h1, h2, h3 { font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
         h1 { font-size: clamp(3rem, 5vw, 5rem); margin-bottom: 1.5rem; }
         h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 3rem; text-align: center; }
         h3 { font-size: 1.5rem; margin-bottom: 1rem; }
         p { font-size: 1.125rem; color: var(--text-muted); }
 
-        /* --- Components --- */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
 
         .btn {
             display: inline-block;
@@ -62,40 +43,30 @@
             padding: 1rem 2rem;
             border-radius: 999px;
             font-weight: 500;
-            font-size: 1.125rem;
             transition: transform 0.2s ease, opacity 0.2s ease;
             border: none;
             cursor: pointer;
         }
 
-        .btn:hover {
-            opacity: 0.85;
-            transform: scale(1.02);
-        }
+        .btn:hover { opacity: 0.85; transform: scale(1.02); }
 
-        section {
-            padding: 8rem 0;
-        }
+        section { padding: 8rem 0; }
 
-        /* --- Navigation --- */
         nav {
             padding: 1.5rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: -0.05em;
-        }
+        .logo { font-size: 1.5rem; font-weight: 700; }
 
-        /* --- Hero Section --- */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -103,277 +74,162 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding-top: 5rem; /* account for nav */
+            padding-top: 5rem;
         }
 
-        .hero p {
+        .hero p { max-width: 600px; margin-bottom: 2.5rem; font-size: 1.25rem; }
+
+        .spline-placeholder {
+            width: 100%;
             max-width: 600px;
-            margin: 0 auto 2.5rem;
-            font-size: 1.25rem;
+            height: 350px;
+            background: #f0f0f2;
+            border-radius: var(--radius);
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #ddd;
         }
 
-        /* --- How It Works --- */
         .grid-3 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
 
-        .card {
-            background-color: var(--surface);
-            padding: 3rem 2rem;
-            border-radius: var(--radius);
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-
-        /* --- Use Cases --- */
-        .use-cases .card {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2.5rem;
-        }
-
-        .use-case-visual {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        /* --- Product Showcase (Grid) --- */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
         .product-item {
             background-color: var(--surface);
             border-radius: var(--radius);
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
-        .product-item:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-        }
+        .product-item:hover { transform: translateY(-5px); }
 
         .product-item img {
             width: 100%;
-            height: auto;
+            height: 250px;
             object-fit: cover;
-            aspect-ratio: 16/9;
         }
 
-        .product-details {
-            padding: 2.5rem 2rem;
-            text-align: left;
-        }
+        .product-details { padding: 2rem; }
 
-        .product-details h3 {
-            margin-bottom: 0.5rem;
-        }
-
-        /* --- Benefits --- */
-        .benefits .card {
-            background: transparent;
-            text-align: left;
-            padding: 1.5rem;
-        }
-
-        /* --- Pricing --- */
-        .pricing-card {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: var(--surface);
-            border: 1px solid var(--border);
+        .use-case-card {
+            background: var(--surface);
+            padding: 2.5rem;
             border-radius: var(--radius);
-            padding: 6rem 4rem;
             text-align: center;
         }
 
-        .price {
-            font-size: 5rem;
-            font-weight: 700;
-            letter-spacing: -0.05em;
-            margin: 2rem 0;
+        .use-case-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
         }
 
-        .price span {
-            font-size: 2rem;
-            color: var(--text-muted);
-            font-weight: 400;
-            letter-spacing: normal;
-        }
-
-        /* --- CTA Section --- */
-        .cta-section {
+        .pricing-card {
+            max-width: 500px;
+            margin: 0 auto;
+            background: var(--surface);
+            padding: 4rem 2rem;
+            border-radius: var(--radius);
             text-align: center;
-            padding: 8rem 0;
-            border-top: 1px solid var(--border);
+            border: 1px solid var(--border);
         }
 
-        /* --- Footer --- */
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-muted);
-            font-size: 0.875rem;
-        }
+        .price { font-size: 4rem; font-weight: 700; margin: 1.5rem 0; }
+        .price span { font-size: 1.5rem; color: var(--text-muted); }
 
-        /* --- Responsive --- */
+        footer { padding: 4rem 2rem; text-align: center; color: var(--text-muted); border-top: 1px solid var(--border); }
+
         @media (max-width: 768px) {
             section { padding: 4rem 0; }
-            .product-grid { grid-template-columns: 1fr; }
-            .pricing-card { padding: 4rem 2rem; }
-            .price { font-size: 4rem; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">Linka.</div>
-        <a href="#commander" class="btn" style="padding: 0.5rem 1.25rem; font-size: 0.9rem;">Commander</a>
+        <div class="logo">Linka NFC.</div>
+        <a href="#commander" class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Commander</a>
     </nav>
 
     <main>
         <header class="hero container">
             <h1>Le réseau, simplifié.</h1>
             <p>Connectez-vous instantanément avec Linka NFC. Partagez votre profil complet en un seul geste.</p>
-            <a href="#commander" class="btn">Commander votre Linka</a>
+            <div class="spline-placeholder">
+                <p>Espace pour animation 3D Spline</p>
+            </div>
+            <a href="#commander" class="btn">Obtenir ma carte</a>
         </header>
 
-        <section class="container">
-            <h2>Comment ça marche</h2>
-            <div class="grid-3">
-                <div class="card">
-                    <span class="card-icon">1️⃣</span>
-                    <h3>Configurez</h3>
-                    <p>Créez votre profil en ligne en quelques minutes avec vos liens et contacts.</p>
-                </div>
-                <div class="card">
-                    <span class="card-icon">2️⃣</span>
-                    <h3>Approchez</h3>
-                    <p>Posez votre Linka sur le smartphone de votre interlocuteur.</p>
-                </div>
-                <div class="card">
-                    <span class="card-icon">3️⃣</span>
-                    <h3>Connectez</h3>
-                    <p>Vos informations s'affichent instantanément, prêtes à être sauvegardées.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="produits" class="container" style="border-top: 1px solid var(--border);">
+        <section id="produits" class="container">
             <h2>Choisissez votre style</h2>
-            <div class="product-grid">
+            <div class="grid-3">
                 <div class="product-item">
-                    <img src="./img/image_2.jpg" alt="Carte de Visite NFC Classique Linka">
+                    <img src="./img/72805A63-FE6F-4E92-B254-55ED398A2E20.PNG" alt="Porte-clés NFC">
                     <div class="product-details">
-                        <h3>Carte de Visite NFC Classique</h3>
-                        <p>L'élégance minimaliste pour votre marque professionnelle. Partagez votre profil complet en un geste.</p>
+                        <h3>Porte-clés NFC Sociaux</h3>
+                        <p>YouTube, TikTok, Twitch. Vos liens, accrochés à vos clés. Rapide et efficace pour les créateurs.</p>
                     </div>
                 </div>
 
                 <div class="product-item">
-                    <img src="./img/image_0.jpg" alt="Porte-clés NFC Réseaux Sociaux Linka">
+                    <img src="./img/1585AAAB-A219-429D-9069-603057B22611.PNG" alt="Carte NFC Classique">
                     <div class="product-details">
-                        <h3>Porte-clés NFC Réseaux Sociaux</h3>
-                        <p>YouTube, TikTok, Twitch. Vos liens, accrochés à votre clé. Rapide, fun, indispensable pour les créateurs.</p>
+                        <h3>Carte Classique Linka</h3>
+                        <p>L'élégance minimaliste. Une finition premium pour vos rencontres professionnelles.</p>
                     </div>
                 </div>
 
                 <div class="product-item">
-                    <img src="./img/image_1.jpg" alt="Carte NFC Personnalisée & Entreprise Linka">
+                    <img src="./img/3DCC3E1B-CD5A-4C81-8442-AE352D4EAC89.PNG" alt="Cartes Thématiques">
                     <div class="product-details">
-                        <h3>Carte Personnalisée & Entreprise</h3>
-                        <p>Designs sur mesure pour vos besoins spécifiques (Instagram, PayPal, ou entreprise). Un visuel fort pour une connexion immédiate.</p>
+                        <h3>Cartes Thématiques</h3>
+                        <p>Instagram, PayPal, ou Entreprise. Un visuel fort pour une connexion immédiate.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="use-cases container">
-            <h2>Un outil, de multiples usages</h2>
-            <div class="grid-3">
-                <div class="card">
-                    <span class="use-case-visual">🍽️</span>
-                    <h3>Restaurants</h3>
-                    <p>Menu digital, avis Google instantanés.</p>
+        <section class="container" style="background: #fafafa; border-radius: 30px;">
+            <h2 style="padding-top: 4rem;">Un outil pour chaque métier</h2>
+            <div class="grid-3" style="padding-bottom: 4rem;">
+                <div class="use-case-card">
+                    <img src="./img/8DCB8918-3CCC-43EA-8C07-B512C1A4EDB3.PNG" alt="Créateurs">
+                    <h3>Créateurs</h3>
+                    <p>Partagez vos réseaux en un éclair lors d'événements.</p>
                 </div>
-                <div class="card">
-                    <span class="use-case-visual">🚕</span>
-                    <h3>Taxis</h3>
-                    <p>Réservations, avis, partage de profil.</p>
-                </div>
-                <div class="card">
-                    <span class="use-case-visual">👔</span>
+                <div class="use-case-card">
+                    <img src="./img/0338AC3D-CCE4-42D3-88E0-D965231D42D9.PNG" alt="Entreprises">
                     <h3>Entreprises</h3>
-                    <p>Modernisez les cartes papier obsoletes.</p>
+                    <p>Modernisez les outils de vos équipes commerciales.</p>
+                </div>
+                <div class="use-case-card">
+                    <img src="./img/EF0D5877-8877-429C-8385-09EFB9005ADB.PNG" alt="Particuliers">
+                    <h3>Indépendants</h3>
+                    <p>Faites-vous payer ou suive en un scan.</p>
                 </div>
             </div>
         </section>
 
-        <section class="benefits container" style="border-top: 1px solid var(--border);">
-            <h2>Pourquoi choisir Linka ?</h2>
-            <div class="grid-3">
-                <div class="card">
-                    <h3>⚡ Zéro application</h3>
-                    <p>Aucune application n'est requise pour vous ou votre interlocuteur.</p>
-                </div>
-                <div class="card">
-                    <h3>📱 Instantané</h3>
-                    <p>Le partage d'informations se fait en un clin d'œil, sans latence.</p>
-                </div>
-                <div class="card">
-                    <h3>📱 iPhone & Android</h3>
-                    <p>Compatible nativement avec la majorité des smartphones modernes.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="tarifs" class="container">
-            <h2>Un tarif clair et unique</h2>
+        <section id="commander" class="container">
+            <h2>Tarif unique</h2>
             <div class="pricing-card">
-                <h3>Pack Linka</h3>
+                <h3>Pack Linka Premium</h3>
                 <div class="price">29€ <span>/ net</span></div>
-                <ul style="list-style: none; text-align: left; max-width: 400px; margin: 0 auto; margin-bottom: 2rem;">
-                    <li style="font-size: 1.125rem; color: var(--text-muted); margin-bottom: 0.5rem; display: flex; align-items: center;"><span style="color: black; margin-right: 0.75rem;">✔️</span>Carte NFC Personnalisée</li>
-                    <li style="font-size: 1.125rem; color: var(--text-muted); margin-bottom: 0.5rem; display: flex; align-items: center;"><span style="color: black; margin-right: 0.75rem;">✔️</span>Profil Web Illimité</li>
-                    <li style="font-size: 1.125rem; color: var(--text-muted); display: flex; align-items: center;"><span style="color: black; margin-right: 0.75rem;">✔️</span>Zéro Abonnement</li>
-                </ul>
+                <p style="margin-bottom: 2rem;">Zéro abonnement. Mise à jour illimitée de votre profil.</p>
                 <a href="#" class="btn" style="width: 100%;">Commander maintenant</a>
             </div>
-        </section>
-
-        <section id="commander" class="cta-section container">
-            <h2>Prêt à moderniser vos rencontres ?</h2>
-            <p style="max-width: 500px; margin: 1rem auto 2rem;">Rejoignez les professionnels qui utilisent déjà Linka pour développer leur réseau efficacement.</p>
-            <a href="#commander" class="btn">Obtenir ma Linka</a>
         </section>
     </main>
 
     <footer>
-        <div class="container">
-            <p>&copy; 2023 Linka NFC. Tous droits réservés.</p>
-        </div>
+        <p>&copy; 2026 Linka NFC. Tous droits réservés.</p>
     </footer>
 
 </body>
