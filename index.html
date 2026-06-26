@@ -5,166 +5,413 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linka NFC | Solutions Professionnelles</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #050505;
-            --card-bg: #111111;
-            --accent: #00f2ff; /* Cyan Néon */
-            --accent-glow: rgba(0, 242, 255, 0.3);
-            --text-white: #ffffff;
-            --text-gray: #a1a1a1;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --radius: 20px;
+            --bg: #FBFBFD; /* Fond clair style Apple */
+            --card-bg: #ffffff;
+            --accent: #0055ff; /* Bleu Tech dynamique */
+            --accent-gradient: linear-gradient(135deg, #0055ff 0%, #7000ff 100%);
+            --text-main: #111112;
+            --text-gray: #6e6e73;
+            --glass: rgba(255, 255, 255, 0.7);
+            --border: rgba(0, 0, 0, 0.08);
+            --radius: 22px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text-white); line-height: 1.6; overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text-main); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .glass { background: var(--glass); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: var(--radius); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        
+        /* Arrière-plan subtil avec grille de points tech */
+        .tech-bg {
+            background-image: radial-gradient(rgba(0, 85, 255, 0.04) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
 
-        /* Navigation */
-        nav { position: fixed; top: 0; width: 100%; z-index: 1000; padding: 20px 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(15px); border-bottom: 1px solid var(--glass-border); }
+        /* Navigation Premium */
+        nav { position: fixed; top: 0; width: 100%; z-index: 1000; padding: 18px 0; background: rgba(253, 253, 255, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
         .nav-content { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 800; }
-        .logo span { color: var(--accent); }
+        .logo { font-size: 1.4rem; font-weight: 900; text-decoration: none; color: var(--text-main); letter-spacing: -0.5px; }
+        .logo span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .desktop-menu { display: flex; gap: 28px; }
+        .desktop-menu a { color: var(--text-gray); text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: 0.2s; }
+        .desktop-menu a:hover { color: var(--accent); }
 
-        /* Buttons */
-        .btn { padding: 12px 28px; border-radius: 50px; font-weight: 600; text-decoration: none; display: inline-block; transition: 0.3s; border: none; cursor: pointer; }
-        .btn-primary { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent-glow); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 30px var(--accent); }
+        /* Boutons Style Épuré */
+        .btn { padding: 12px 28px; border-radius: 50px; font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); border: none; cursor: pointer; text-align: center; }
+        .btn-primary { background: var(--accent-gradient); color: #fff; box-shadow: 0 8px 20px rgba(0, 85, 255, 0.15); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0, 85, 255, 0.25); }
+
+        /* Bouton WhatsApp Flottant */
+        .whatsapp-float {
+            position: fixed; bottom: 30px; right: 30px; background-color: #25D366; color: #fff; border-radius: 50px; padding: 14px 26px; font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 10px; text-decoration: none; z-index: 2000; box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3); transition: all 0.3s;
+        }
+        .whatsapp-float:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 14px 35px rgba(37, 211, 102, 0.4); }
+
+        /* Titres Typographie Lourde & Serrée */
+        h1, h2 { font-weight: 900; letter-spacing: -0.04em; color: var(--text-main); line-height: 1.1; }
+        h1 { font-size: clamp(2.8rem, 6vw, 4.8rem); margin-bottom: 24px; }
+        h1 span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
         /* Hero */
-        .hero { padding: 180px 0 100px; text-align: center; }
-        .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; margin-bottom: 20px; line-height: 1.1; }
-        .hero h1 span { color: var(--accent); }
-        .hero p { max-width: 700px; margin: 0 auto 40px; font-size: 1.2rem; color: var(--text-gray); }
+        .hero { padding: 180px 0 100px; text-align: center; position: relative; }
+        .hero p { max-width: 650px; margin: 0 auto 40px; font-size: 1.25rem; color: var(--text-gray); font-weight: 500; }
 
-        /* Section Titles */
-        .section-header { text-align: center; margin: 80px 0 40px; }
-        .category-tag { background: var(--glass); padding: 6px 16px; border-radius: 50px; font-size: 0.8rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+        /* Éléments de décoration scintillants ✦ */
+        .sparkle { color: var(--accent); display: inline-block; margin: 0 4px; animation: pulse 2s infinite ease-in-out; }
 
-        /* Product Grid */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px; }
-        .card { padding: 20px; transition: 0.3s; display: flex; flex-direction: column; position: relative; }
-        .card:hover { border-color: var(--accent); transform: translateY(-10px); }
-        .card img { width: 100%; height: 220px; object-fit: cover; border-radius: 12px; margin-bottom: 20px; }
-        .card h3 { font-size: 1.4rem; margin-bottom: 10px; }
-        .card p { color: var(--text-gray); font-size: 0.95rem; flex-grow: 1; margin-bottom: 20px; }
-        .price { font-size: 1.8rem; font-weight: 800; color: var(--accent); margin-bottom: 20px; }
-        .price span { font-size: 0.9rem; color: var(--text-gray); font-weight: 400; }
+        /* Section Headers */
+        .section-header { text-align: center; margin: 100px 0 50px; }
+        .category-tag { background: #fff; padding: 6px 18px; border-radius: 50px; font-size: 0.8rem; font-weight: 700; color: var(--accent); border: 1px solid var(--border); text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
 
-        .featured { border: 2px solid var(--accent); }
-        .badge { position: absolute; top: -12px; right: 20px; background: var(--accent); color: #000; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; }
+        /* Grilles Générales */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; margin-bottom: 60px; }
+        
+        /* Cartes Premium Style Épuré */
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 35px 28px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column; position: relative; box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02); }
+        .card:hover { transform: translateY(-8px); border-color: rgba(0, 85, 255, 0.3); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06); }
 
-        footer { padding: 60px 0; text-align: center; border-top: 1px solid var(--glass-border); margin-top: 80px; color: var(--text-gray); }
+        /* Conteneurs d'images adaptés (Pas de Zoom) */
+        .img-container { width: 100%; height: 260px; background: #F5F5F7; border-radius: 14px; margin-bottom: 24px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+        .card img { max-width: 90%; max-height: 90%; object-fit: contain; transform: translateZ(0); }
 
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.8rem; }
-        }
+        /* NOUVEAU : Effet Collage CSS Superposé pour les Packs */
+        .collage-container { width: 100%; height: 260px; background: #EFEFF4; border-radius: 14px; margin-bottom: 24px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        .collage-img { position: absolute; max-width: 65% !important; max-height: 65% !important; border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); transition: transform 0.3s; }
+        .img-left { transform: rotate(-10deg) translateX(-35px); z-index: 1; }
+        .img-center { transform: scale(1.05) translateY(-5px); z-index: 2; }
+        .img-right { transform: rotate(10deg) translateX(35px); z-index: 1; }
+        .card:hover .img-center { transform: scale(1.1) translateY(-12px); }
+
+        .card h3 { font-size: 1.45rem; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .card p { color: var(--text-gray); font-size: 0.98rem; flex-grow: 1; margin-bottom: 24px; }
+        .price { font-size: 1.9rem; font-weight: 900; color: var(--text-main); margin-bottom: 24px; letter-spacing: -0.03em; }
+        .price span { font-size: 0.95rem; color: var(--text-gray); font-weight: 500; }
+
+        .badge { position: absolute; top: 16px; right: 16px; background: var(--accent-gradient); color: #fff; padding: 5px 14px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.5px; z-index: 10; }
+
+        /* Comment ça marche */
+        .step-icon { font-size: 2.5rem; margin-bottom: 15px; display: inline-block; }
+
+        /* Pourquoi nous */
+        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 60px; }
+        .benefit-badge { padding: 24px; display: flex; align-items: flex-start; gap: 18px; border-radius: 16px; background: #fff; border: 1px solid var(--border); }
+        .benefit-icon { font-size: 1.8rem; }
+        .benefit-badge h4 { font-size: 1.15rem; font-weight: 800; margin-bottom: 6px; }
+        .benefit-badge p { font-size: 0.92rem; color: var(--text-gray); }
+
+        /* FAQ Accordion */
+        .faq-container { max-width: 800px; margin: 0 auto 60px; display: flex; flex-direction: column; gap: 16px; }
+        .faq-item { border-radius: 16px; background: #fff; border: 1px solid var(--border); overflow: hidden; transition: 0.3s; }
+        .faq-question { width: 100%; background: transparent; border: none; color: var(--text-main); text-align: left; padding: 22px; font-size: 1.1rem; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; letter-spacing: -0.01em; }
+        .faq-question::after { content: '↓'; font-size: 1.2rem; color: var(--accent); transition: transform 0.3s; font-weight: 900; }
+        .faq-item.active .faq-question::after { transform: rotate(-180deg); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1); background: #FBFBFD; }
+        .faq-answer p { padding: 0 22px 22px 22px; color: var(--text-gray); font-size: 0.98rem; }
+
+        /* Social Cards */
+        .social-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
+        .social-card { padding: 24px 40px; background: #fff; border: 1px solid var(--border); min-width: 220px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .social-card span { font-weight: 800; font-size: 1.25rem; color: var(--text-main); }
+
+        /* Footer */
+        footer { padding: 80px 0 40px; border-top: 1px solid var(--border); background: #fff; font-size: 0.92rem; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 50px; }
+        .footer-links-group { display: flex; flex-direction: column; gap: 12px; }
+        .footer-links-group h4 { font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; }
+        .footer-links-group a { color: var(--text-gray); text-decoration: none; transition: 0.2s; }
+        .footer-links-group a:hover { color: var(--accent); }
+        .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid var(--border); color: var(--text-gray); font-size: 0.85rem; }
+
+        @media (max-width: 968px) { .desktop-menu { display: none; } }
+        @media (max-width: 768px) { h1 { font-size: 2.6rem; } .grid, .benefits-grid, .footer-grid { grid-template-columns: 1fr; } .whatsapp-float { bottom: 20px; right: 20px; padding: 12px 20px; } }
     </style>
 </head>
-<body>
+<body class="tech-bg">
 
+    <!-- Bouton WhatsApp Flottant -->
+    <a href="https://wa.me/33780907357?text=Bonjour%20je%20suis%20intéressé%20par%20vos%20cartes%20NFC" class="whatsapp-float" target="_blank">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.742.002-2.602-1.01-5.05-2.85-6.892-1.84-1.842-4.29-2.856-6.896-2.858-5.442 0-9.869 4.372-9.873 9.747-.001 1.73.46 3.415 1.335 4.927L1.398 21.6l4.249-1.114zM17.9 14.18c-.336-.169-1.991-.983-2.327-1.105-.335-.123-.58-.184-.824.184-.244.368-.947 1.196-1.161 1.441-.214.245-.429.276-.765.107-.336-.169-1.417-.523-2.701-1.668-1.002-.894-1.678-2.001-1.874-2.338-.197-.337-.021-.519.148-.687.151-.151.336-.393.504-.59.168-.196.224-.337.336-.562.113-.225.056-.421-.028-.59-.084-.169-.824-1.991-1.13-2.726-.297-.715-.604-.617-.824-.628-.211-.01-.453-.011-.695-.011-.242 0-.638.09-.972.462-.334.371-1.277 1.25-1.277 3.048 0 1.797 1.308 3.531 1.49 3.774.182.243 2.574 3.931 6.234 5.516.87.378 1.55.603 2.08.771.874.278 1.671.239 2.3.145.7-.105 1.991-.813 2.272-1.598.282-.787.282-1.46.197-1.598-.085-.14-.312-.223-.648-.392z"/></svg>
+        Commander sur WhatsApp
+    </a>
+
+    <!-- Navigation -->
     <nav>
         <div class="container nav-content">
-            <div class="logo">LINKA<span>NFC</span></div>
-            <a href="https://wa.me/33780907357?text=Bonjour%20je%20suis%20intéressé%20par%20vos%20cartes%20NFC" class="btn btn-primary">Commander</a>
+            <a href="#" class="logo">LINKA<span>NFC</span></a>
+            <div class="desktop-menu">
+                <a href="#how">Comment ça marche</a>
+                <a href="#why">Pourquoi nous ?</a>
+                <a href="#boutique">Produits</a>
+                <a href="#faq">FAQ</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <a href="https://wa.me/33780907357" class="btn btn-primary">Commander</a>
         </div>
     </nav>
 
+    <!-- Hero Section -->
     <header class="hero container">
-        <span class="category-tag">Prêt à l'emploi</span>
-        <h1>Le NFC qui transforme chaque contact en <span>client</span>.</h1>
-        <p>Boostez vos avis Google, vos réseaux sociaux et vos réservations en un seul geste. Sans application, compatible tout smartphone.</p>
-        <a href="#boutique" class="btn btn-primary">Voir la boutique</a>
+        <span class="category-tag"><span class="sparkle">✦</span> Technologie Pro 2026</span>
+        <h1 style="margin-top: 20px;">Le NFC qui transforme chaque contact en <span>client</span>.</h1>
+        <p>Vos solutions prêtes à l'emploi pour avis Google, réseaux sociaux et contacts. Approchez, connectez instantanément.</p>
+        <a href="#boutique" class="btn btn-primary">Découvrir la boutique</a>
     </header>
 
+    <!-- SECTION : COMMENT ÇA MARCHE -->
+    <section id="how" class="container">
+        <div class="section-header">
+            <span class="category-tag">Simplicité</span>
+            <h2 style="margin-top:12px;">Comment ça marche ?</h2>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <div class="step-icon">📱</div>
+                <h3>1. Approchez</h3>
+                <p>Le client approche son smartphone de la carte ou du porte-clé Linka NFC sans contact.</p>
+            </div>
+            <div class="card">
+                <div class="step-icon">⚡</div>
+                <h3>2. Ouverture</h3>
+                <p>Le lien (Avis Google, Profil Instagram, Menu...) surgit automatiquement sur son écran.</p>
+            </div>
+            <div class="card">
+                <div class="step-icon">🚀</div>
+                <h3>3. Conversion</h3>
+                <p>Il laisse son avis positif ou s'abonne à vos pages en moins de 3 secondes chrono.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION : AVANTAGES -->
+    <section id="why" class="container">
+        <div class="section-header">
+            <span class="category-tag">Performance</span>
+            <h2 style="margin-top:12px;">Pourquoi choisir Linka NFC ?</h2>
+        </div>
+        <div class="benefits-grid">
+            <div class="benefit-badge">
+                <span class="benefit-icon">✨</span>
+                <div>
+                    <h4>Sans application</h4>
+                    <p>Zéro friction. Pas d'application à installer pour vous ou vos clients.</p>
+                </div>
+            </div>
+            <div class="benefit-badge">
+                <span class="benefit-icon">🤝</span>
+                <div>
+                    <h4>iPhone & Android</h4>
+                    <p>Technologie universelle, compatible avec tous les smartphones modernes.</p>
+                </div>
+            </div>
+            <div class="benefit-badge">
+                <span class="benefit-icon">📦</span>
+                <div>
+                    <h4>Prêt à l'emploi</h4>
+                    <p>Aucun paramétrage requis. Vos puces arrivent encodées et configurées.</p>
+                </div>
+            </div>
+            <div class="benefit-badge">
+                <span class="benefit-icon">📍</span>
+                <div>
+                    <h4>Tout emplacement</h4>
+                    <p>Idéal à disposer sur vos comptoirs, tables de restaurant ou tableaux de bord VTC.</p>
+                </div>
+            </div>
+            <div class="benefit-badge">
+                <span class="benefit-icon">💬</span>
+                <div>
+                    <h4>Support WhatsApp</h4>
+                    <p>Une équipe réactive à vos côtés pour suivre vos commandes et vous guider.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BOUTIQUE -->
     <main class="container" id="boutique">
 
+        <!-- PORTE-CLÉS -->
         <div class="section-header">
-            <span class="category-tag">Accessoires</span>
-            <h2 style="margin-top:10px;">Porte-clés NFC</h2>
+            <span class="category-tag">Gamme Accessoires</span>
+            <h2 style="margin-top:12px;">Porte-clés NFC</h2>
         </div>
         <div class="grid">
-            <div class="card glass">
-                <img src="./img/72805A63-FE6F-4E92-B254-55ED398A2E20.PNG" alt="Porte-clé Unité">
+            <div class="card">
+                <div class="img-container">
+                    <img src="./img/72805A63-FE6F-4E92-B254-55ED398A2E20.PNG" alt="Porte-clé Individuel">
+                </div>
                 <h3>Le Porte-clé Linka</h3>
-                <p>Vos réseaux sociaux toujours à portée de main. Idéal pour les créateurs et indépendants.</p>
+                <p>Vos réseaux majeurs accrochés à vos clés. Idéal pour capter des abonnés partout en déplacement.</p>
                 <div class="price">14,99 € <span>TTC</span></div>
-                <a href="https://wa.me/33780907357?text=Je%20souhaite%20commander%20le%20porte-clé%20unité" class="btn btn-primary">Commander</a>
+                <a href="https://wa.me/33780907357" class="btn btn-primary">Commander</a>
             </div>
-            <div class="card glass featured">
-                <div class="badge">MEILLEUR PRIX</div>
-                <img src="./img/72805A63-FE6F-4E92-B254-55ED398A2E20.PNG" alt="Pack Porte-clés">
+            <div class="card" style="border-color: var(--accent);">
+                <div class="badge">TOP OFFRE</div>
+                <div class="collage-container">
+                    <!-- Effet de superposition des visuels pour le pack de 3 -->
+                    <img src="./img/72805A63-FE6F-4E92-B254-55ED398A2E20.PNG" class="collage-img img-left" alt="Porte-clé 1">
+                    <img src="./img/72805A63-FE6F-4E92-B254-55ED398A2E20.PNG" class="collage-img img-center" alt="Porte-clé 2">
+                    <img src="./img/72805A63-FE6F-4E92-B254-55ED398A2E20.PNG" class="collage-img img-right" alt="Porte-clé 3">
+                </div>
                 <h3>Pack de 3 Porte-clés</h3>
-                <p>Équipez vos collaborateurs ou séparez vos réseaux (TikTok, Insta, Snap).</p>
+                <p>Multipliez vos sources de trafic : dédiez un porte-clé pour TikTok, un pour Instagram et un pour Snapchat.</p>
                 <div class="price">29,99 € <span>TTC</span></div>
-                <a href="https://wa.me/33780907357?text=Je%20souhaite%20commander%20le%20pack%20de%203%20porte-clés" class="btn btn-primary">Profiter de l'offre</a>
+                <a href="https://wa.me/33780907357" class="btn btn-primary">Choisir ce pack</a>
             </div>
         </div>
 
+        <!-- CARTES -->
         <div class="section-header">
-            <span class="category-tag">Premium</span>
-            <h2 style="margin-top:10px;">Cartes Business</h2>
+            <span class="category-tag">Gamme Pro</span>
+            <h2 style="margin-top:12px;">Cartes Professionnelles</h2>
         </div>
         <div class="grid">
-            <div class="card glass">
-                <img src="./img/1585AAAB-A219-429D-9069-603057B22611.PNG" alt="Carte Unité">
-                <h3>Carte Linka à l'unité</h3>
-                <p>Entièrement prête à l'emploi. Choisissez votre solution (Avis Google, Insta, Menu...).</p>
+            <div class="card">
+                <div class="img-container">
+                    <img src="./img/1585AAAB-A219-429D-9069-603057B22611.PNG" alt="Carte Unité">
+                </div>
+                <h3>Carte Linka Unité</h3>
+                <p>La solution ciblée par excellence. Configurable sur l'action de votre choix (Avis Google, WhatsApp, Menu).</p>
                 <div class="price">22,99 € <span>TTC</span></div>
-                <a href="https://wa.me/33780907357?text=Je%20souhaite%20commander%20une%20carte%20unité" class="btn btn-primary">Commander</a>
+                <a href="https://wa.me/33780907357" class="btn btn-primary">Commander</a>
             </div>
-            <div class="card glass">
-                <img src="./img/3DCC3E1B-CD5A-4C81-8442-AE352D4EAC89.PNG" alt="Pack x2">
-                <h3>Pack Duo (x2)</h3>
-                <p>Deux cartes configurées selon vos besoins. Idéal pour les petites entreprises.</p>
-                <div class="price">39,99 € <span>TTC</span></div>
-                <a href="https://wa.me/33780907357?text=Je%20souhaite%20commander%20le%20pack%20de%202%20cartes" class="btn btn-primary">Commander</a>
-            </div>
-            <div class="card glass featured">
-                <div class="badge">PACK PRO</div>
-                <img src="./img/3DCC3E1B-CD5A-4C81-8442-AE352D4EAC89.PNG" alt="Pack x4">
-                <h3>Pack Business (x4)</h3>
-                <p>La solution complète : Instagram + Snapchat + Google Avis + TikTok.</p>
+            
+            <div class="card">
+                <div class="badge">BEST-SELLER</div>
+                <div class="collage-container">
+                    <!-- Effet Collage pour le Pack Salon -->
+                    <img src="./img/3DCC3E1B-CD5A-4C81-8442-AE352D4EAC89.PNG" class="collage-img img-left" alt="Carte Salon Insta">
+                    <img src="./img/904C7742-8063-4F47-8D58-6CB9A3F65013.PNG" class="collage-img img-center" alt="Carte Salon Google">
+                    <img src="./img/3DCC3E1B-CD5A-4C81-8442-AE352D4EAC89.PNG" class="collage-img img-right" alt="Carte Salon TikTok">
+                </div>
+                <h3>Pack Salon / Barber</h3>
+                <p>Développez massivement votre salon. Pack de 4 cartes prêtes : Instagram, Google Avis, Snap et TikTok.</p>
                 <div class="price">59,99 € <span>TTC</span></div>
-                <a href="https://wa.me/33780907357?text=Je%20souhaite%20commander%20le%20pack%20de%204%20cartes" class="btn btn-primary">Prendre le pack</a>
+                <a href="https://wa.me/33780907357" class="btn btn-primary">Choisir ce pack</a>
+            </div>
+
+            <div class="card">
+                <div class="collage-container">
+                    <!-- Effet Collage pour le Pack Chauffeur -->
+                    <img src="./img/EF0D5877-8877-429C-8385-09EFB9005ADB.PNG" class="collage-img img-left" alt="Carte Chauffeur Google">
+                    <img src="./img/EF0D5877-8877-429C-8385-09EFB9005ADB.PNG" class="collage-img img-center" alt="Carte Chauffeur WhatsApp">
+                </div>
+                <h3>Pack Chauffeur Privé</h3>
+                <p>Idéal pour Taxis & VTC. Associe astucieusement une carte WhatsApp Réservations et une carte Google Avis.</p>
+                <div class="price">35,99 € <span>TTC</span></div>
+                <a href="https://wa.me/33780907357" class="btn btn-primary">Choisir ce pack</a>
             </div>
         </div>
 
-        <div class="section-header">
-            <span class="category-tag">Solutions</span>
-            <h2 style="margin-top:10px;">Packs Spécialisés</h2>
-        </div>
-        <div class="grid">
-            <div class="card glass" style="border-color: #0066FF;">
-                <img src="./img/EF0D5877-8877-429C-8385-09EFB9005ADB.PNG" alt="Pack Chauffeur">
-                <h3>Pack Chauffeur Privé</h3>
-                <p>2 cartes : WhatsApp pour vos réservations et Google pour vos avis clients.</p>
-                <div class="price">35,99 € <span>TTC</span></div>
-                <a href="https://wa.me/33780907357?text=Je%20suis%20chauffeur%20et%20je%20veux%20votre%20pack" class="btn btn-primary" style="background:#0066FF; color:white;">Pack VTC / LVC</a>
+        <!-- FAQ -->
+        <section id="faq">
+            <div class="section-header">
+                <span class="category-tag">Aide & Support</span>
+                <h2 style="margin-top:12px;">Foire Aux Questions</h2>
             </div>
-            <div class="card glass">
-                <img src="./img/904C7742-8063-4F47-8D58-6CB9A3F65013.PNG" alt="Pack Salon">
-                <h3>Pack Salon / Barber</h3>
-                <p>Boostez votre visibilité : Instagram, Google Avis, Snap et TikTok directement au comptoir.</p>
-                <div class="price">59,99 € <span>TTC</span></div>
-                <a href="https://wa.me/33780907357?text=Je%20souhaite%20le%20pack%20Salon%20de%20Beauté" class="btn btn-primary">Activer mon salon</a>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">Les cartes fonctionnent-elles avec iPhone ?</button>
+                    <div class="faq-answer"><p>Oui, absolument. Tous les iPhone récents intègrent nativement la puce de lecture sans contact au dos de l'appareil.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Faut-il installer une application ?</button>
+                    <div class="faq-answer"><p>Aucune application n'est nécessaire. Le smartphone ouvre le lien instantanément sur son navigateur habituel.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Peut-on utiliser la carte avec Android ?</button>
+                    <div class="faq-answer"><p>Oui, l'immense majorité des appareils Android possèdent la fonction NFC (celle utilisée pour payer sans contact) activée par défaut.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Combien de temps dure une carte NFC ?</button>
+                    <div class="faq-answer"><p>Leur autonomie est illimitée. Elles fonctionnent sans batterie, sans ondes nocives et durent plusieurs dizaines d'années.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Comment passer commande ?</button>
+                    <div class="faq-answer"><p>Cliquez simplement sur l'un de nos boutons de commande pour échanger directement avec notre équipe via WhatsApp.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Les liens sont-ils prêts à l'emploi ?</button>
+                    <div class="faq-answer"><p>Oui, nous programmons entièrement vos cartes en amont selon vos besoins. Vous n'avez plus qu'à les poser sur vos comptoirs.</p></div>
+                </div>
             </div>
-        </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section class="contact-section" id="contact">
+            <div class="section-header">
+                <span class="category-tag">Réseaux</span>
+                <h2 style="margin-top:12px;">Nous contacter</h2>
+            </div>
+            <div class="social-links">
+                <a href="https://instagram.com/Linkanfc" target="_blank" class="social-card card">
+                    <span>Instagram</span>
+                    <p style="margin: 0;">@Linkanfc</p>
+                </a>
+                <a href="https://www.snapchat.com/add/linkanfc" target="_blank" class="social-card card">
+                    <span>Snapchat</span>
+                    <p style="margin: 0;">linkanfc</p>
+                </a>
+                <a href="https://wa.me/33780907357" target="_blank" class="social-card card">
+                    <span>WhatsApp</span>
+                    <p style="margin: 0;">07 80 90 73 57</p>
+                </a>
+            </div>
+        </section>
     </main>
 
+    <!-- FOOTER -->
     <footer>
-        <div class="container">
-            <div class="logo">LINKA<span>NFC</span></div>
-            <p style="margin: 20px 0;">Cartes et porte-clés NFC pour professionnels exigeants.</p>
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="logo">LINKA<span>NFC</span></div>
+                <p style="margin-top: 15px;">Cartes et porte-clés NFC haut de gamme pour professionnels.</p>
+            </div>
+            <div class="footer-links-group">
+                <h4>Expédition & Contact</h4>
+                <p>Support direct : <a href="https://wa.me/33780907357" style="color:var(--accent); text-decoration:none;">07 80 90 73 57</a></p>
+                <p>🚀 Expédié sous 48h partout en France</p>
+            </div>
+            <div class="footer-links-group">
+                <h4>Légal</h4>
+                <a href="#legal">Mentions légales</a>
+                <a href="#cgv">Conditions Générales de Vente</a>
+                <a href="#privacy">Politique de confidentialité</a>
+            </div>
+        </div>
+        <div class="container footer-bottom">
             <p>&copy; 2026 Linka NFC. Tous droits réservés.</p>
         </div>
     </footer>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const faqItem = question.parentElement;
+                    const faqAnswer = question.nextElementSibling;
+
+                    document.querySelectorAll('.faq-item').forEach(item => {
+                        if (item !== faqItem && item.classList.contains('active')) {
+                            item.classList.remove('active');
+                            item.querySelector('.faq-answer').style.maxHeight = null;
+                        }
+                    });
+
+                    faqItem.classList.toggle('active');
+                    if (faqItem.classList.contains('active')) {
+                        faqAnswer.style.maxHeight = faqAnswer.scrollHeight + "px";
+                    } else {
+                        faqAnswer.style.maxHeight = null;
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
